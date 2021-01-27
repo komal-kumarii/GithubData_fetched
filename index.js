@@ -6,24 +6,28 @@ const url = 'https://api.github.com/users/'+username+'/repos'
 async function fetchdata(url){
     let response = await fetch(url)
     let data = await response.json()
-
-    let mains=new Object(data)
-    var NameLis = []
-    var desc=[]
-    var branch=[]
-    var result = {}
-    for (var i of mains){
-        NameLis.push(i.full_name)
-        desc.push(i.description)
-        branch.push(i.default_branch)
-        
+     if(data.length>0){
+        let mains=new Object(data)
+        console.log('s.no  ','   Reponame    ','             RepoDesc    ','                           branch')
+        for (var i in mains){
+            var des = ""
+            if(mains[i]["description"]===null){
+                des === null
+                console.log(des)
+            }
+            else{
+                for(var k=0;k<=mains[i]["description"].length;k++){
+                    if(k<40){
+                        des += mains[i]["description"][k]
+                    }
+                }
+            }
+            console.log(parseInt(i)+1,"   ",mains[i]["name"]," ",des,"  ",mains[i]["default_branch"])
+        }
+        // console.log(desc)
     }
-    for(var j in NameLis){
-        result["name"]= NameLis[j],
-        result["desc"]=desc[j],
-        result["default_branch"]=branch[j]
-        console.log(result)
+    else{
+        console.log('No-user found from this name ---')
     }
-
 }
 fetchdata(url);
